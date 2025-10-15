@@ -1,25 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+
+const osoby = [
+  { imie: 'Jan', wiek: 12 },
+  { imie: 'Filip', wiek: 2123 },
+  { imie: 'Zofia', wiek: 32 },
+  { imie: 'Katarzyna' },
+];
+
+
+const Imie = ({ imie, wiek }) => {
+  return (
+    <>
+      <h1 className="text-2xl font-bold text-blue-600">{imie}</h1>
+      <p className="text-gray-500 text-sm">{wiek ? `Wiek: ${wiek}` : ''}</p>
+    </>
+  );
+
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {
+        osoby.map((osoba, index) => (
+          <Imie key={index} imie={osoba.imie} wiek={osoba.wiek} />
+        ))
+      }
+
+    </>
   );
 }
-
 export default App;
