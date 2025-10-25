@@ -11,13 +11,13 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const [query, setQuery] = useState(''); // text search
-  const [typeFilter, setTypeFilter] = useState('all'); // filter by brewery_type
-  const [sortOrder, setSortOrder] = useState('name-asc'); // sorting
-  const [favorites, setFavorites] = useState([]); // favorite brewery ids
-  const [selected, setSelected] = useState(null); // selected brewery for details
+  const [query, setQuery] = useState(''); // search text
+  const [typeFilter, setTypeFilter] = useState('all'); // brevery_type
+  const [sortOrder, setSortOrder] = useState('name-asc'); 
+  const [favorites, setFavorites] = useState([]); // IDs
+  const [selected, setSelected] = useState(null); // details
+  const [showFavorites, setShowFavorites] = useState(false)
 
-  //fetch data
   useEffect(() => {
     setLoading(true);
     setError(null);
@@ -63,10 +63,13 @@ function App() {
           sortOrder={sortOrder}
           setSortOrder={setSortOrder}
           clearSelection={clear}
+          showFavorites={showFavorites}
+          setShowFavorites={setShowFavorites}
+          favorites={favorites}
         />
 
-        {loading && <p className="text-center py-6">Ładowanie danych...</p>}
-        {error && <p className="text-center text-red-600 py-6">Błąd: {error}</p>}
+        {loading && <p className="text-center py-6">Loading data...</p>}
+        {error && <p className="text-center text-red-600 py-6">Error: {error}</p>}
 
         {selected && (
           <div className="mt-6">
@@ -91,6 +94,7 @@ function App() {
             favorites={favorites}
             toggleFavorite={toggleFavorite}
             setSelected={setSelected}
+            showFavorites={showFavorites}
           />
         )}
 

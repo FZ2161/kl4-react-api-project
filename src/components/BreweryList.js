@@ -12,7 +12,7 @@ function matchesQuery(brewery, q) {
   );
 }
 
-export default function BreweryList({ breweries, query, typeFilter, sortOrder, favorites, toggleFavorite, setSelected }) {
+export default function BreweryList({ breweries, query, typeFilter, sortOrder, favorites, toggleFavorite, setSelected, showFavorites }) {
 
   let processed = breweries.slice();
 
@@ -22,9 +22,11 @@ export default function BreweryList({ breweries, query, typeFilter, sortOrder, f
 
   processed = processed.filter((b) => matchesQuery(b, query));
 
-  if (sortOrder == 'name-asc') processed.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-  if (sortOrder == 'name-desc') processed.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
-  if (sortOrder == 'state-asc') processed.sort((a, b) => (a.state || '').localeCompare(b.state || ''));
+  if (sortOrder === 'name-asc') processed.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+  if (sortOrder === 'name-desc') processed.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
+  if (sortOrder === 'state-asc') processed.sort((a, b) => (a.state || '').localeCompare(b.state || ''));
+
+  if (showFavorites) {processed = processed.filter((b)=>favorites.includes(b.id))}
 
   if (processed.length == 0) {
     return <p className="text-center py-8">Nie znaleziono wyników.</p>;
@@ -32,10 +34,6 @@ export default function BreweryList({ breweries, query, typeFilter, sortOrder, f
 
   return (
     <div id='brevery-list' className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-      {/* {processed.map((b) => (
-        <BreweryCard key={b.id} brewery={b} isFavorite={favorites.includes(b.id)} toggleFavorite={toggleFavorite} onSelect={onSelect} />
-      ))} */}
-
       {
         processed.map((b) => (
           <BreweryCard key={b.id} brewery={b} isFavorite={favorites.includes(b.id)} toggleFavorite={toggleFavorite} setSelected={setSelected}/>
