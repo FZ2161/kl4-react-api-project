@@ -1,4 +1,3 @@
-import React from 'react';
 
 export default function BreweryDetails({ brewery, isFavorite, toggleFavorite }) {
   if (!brewery) return null;
@@ -8,7 +7,7 @@ export default function BreweryDetails({ brewery, isFavorite, toggleFavorite }) 
       <div className="flex justify-between items-start">
         <div>
           <h2 className="text-2xl font-bold">{brewery.name}</h2>
-          <p className="text-sm text-gray-600">{brewery.brewery_type} • {brewery.city}, {brewery.state}</p>
+          <p className="text-sm text-gray-600">{brewery.brewery_type} - {brewery.city}, {brewery.state}</p>
         </div>
         <div>
           <button onClick={() => toggleFavorite(brewery.id)} className={`px-3 py-1 rounded ${isFavorite ? 'bg-yellow-300' : 'bg-gray-100'}`}>
@@ -27,7 +26,7 @@ export default function BreweryDetails({ brewery, isFavorite, toggleFavorite }) 
 
         <div>
           <p><strong>Phone:</strong> {brewery.phone || '—'}</p>
-          {/* <p><strong>Website:</strong> {brewery.website_url ? <a className="text-indigo-600" href={brewery.website_url} target="_blank" rel="noreferrer">Visit site</a> : '—'}</p> */}
+          <p><strong>Website:</strong> {brewery.website_url ? <a className="text-indigo-600" href={brewery.website_url} target="_blank" rel="noreferrer">Visit site</a> : '—'}</p>
           <p className="mt-2 text-sm text-gray-500">ID: {brewery.id}</p>
         </div>
       </div>

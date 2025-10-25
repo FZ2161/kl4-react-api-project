@@ -6,12 +6,11 @@ import BreweryList from './components/BreweryList';
 import BreweryDetails from './components/BreweryDetails';
 
 function App() {
-  
-  const [breweries, setBreweries] = useState([]); 
-  const [loading, setLoading] = useState(false); 
-  const [error, setError] = useState(null); 
 
-  // UI and interaction states
+  const [breweries, setBreweries] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const [query, setQuery] = useState(''); // text search
   const [typeFilter, setTypeFilter] = useState('all'); // filter by brewery_type
   const [sortOrder, setSortOrder] = useState('name-asc'); // sorting
@@ -22,7 +21,7 @@ function App() {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    const fetchBreweries =  async () => {
+    const fetchBreweries = async () => {
       try {
         const response = await fetch('https://api.openbrewerydb.org/v1/breweries')
         if (!response.ok) throw new Error(`HTTP ${response.status}`)
@@ -40,16 +39,16 @@ function App() {
   }, []);
 
   // store favs id
-  function toggleFavorite(id) {
+  const toggleFavorite=(id) => {
     setFavorites((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
   }
 
-  // random details
-  // function randomBrewery() {
-  //   if (breweries.length === 0) return;
-  //   const r = breweries[Math.floor(Math.random() * breweries.length)];
-  //   setSelected(r);
-  // }
+  const clear = () => {
+    setSelected(null)
+    setSortOrder("name-asc")
+    setTypeFilter('all')
+    setQuery('')
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
@@ -63,12 +62,25 @@ function App() {
           setTypeFilter={setTypeFilter}
           sortOrder={sortOrder}
           setSortOrder={setSortOrder}
-          // randomBrewery={randomBrewery}
-          clearSelection={() => setSelected(null)}
+          clearSelection={clear}
         />
 
         {loading && <p className="text-center py-6">Ładowanie danych...</p>}
         {error && <p className="text-center text-red-600 py-6">Błąd: {error}</p>}
+
+        {selected && (
+          <div className="mt-6">
+            <BreweryDetails brewery={selected} isFavorite={favorites.includes(selected.id)} toggleFavorite={toggleFavorite} />
+            <div className="mt-4">
+              <button
+                className="px-4 py-2 mb-4 bg-gray-200 rounded hover:bg-gray-300"
+                onClick={() => setSelected(null)}
+              >
+                Close details
+              </button>
+            </div>
+          </div>
+        )}
 
         {!loading && !error && (
           <BreweryList
@@ -78,23 +90,11 @@ function App() {
             sortOrder={sortOrder}
             favorites={favorites}
             toggleFavorite={toggleFavorite}
-            onSelect={setSelected}
+            setSelected={setSelected}
           />
         )}
 
-        {selected && (
-          <div className="mt-6">
-            <BreweryDetails brewery={selected} isFavorite={favorites.includes(selected.id)} toggleFavorite={toggleFavorite} />
-            <div className="mt-4">
-              <button
-                className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
-                onClick={() => setSelected(null)}
-              >
-                Close details
-              </button>
-            </div>
-          </div>
-        )}
+
       </main>
     </div>
   );
