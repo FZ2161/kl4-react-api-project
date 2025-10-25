@@ -48,6 +48,7 @@ function App() {
     setSortOrder("name-asc")
     setTypeFilter('all')
     setQuery('')
+    setShowFavorites(false)
   }
 
   return (

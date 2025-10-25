@@ -29,12 +29,12 @@ export default function SearchControls({ query, setQuery, typeFilter, setTypeFil
 
         <button
           onClick={() => setShowFavorites((s) => !s)}
-          className={`ml-auto px-3 py-2 rounded font-medium ${showFavorites ? 'bg-yellow-400 text-black' : 'bg-gray-200  text-black'}`}
+          className={` px-3 py-2 rounded ${showFavorites ? 'bg-yellow-400 text-black' : 'bg-gray-200  text-black'}`}
         >
           {favText}
         </button>
 
-        <button onClick={clearSelection} className="ml-2 px-3 py-2 bg-gray-200 rounded">Clear</button>
+        <button onClick={clearSelection} className="px-3 py-2 bg-gray-200 rounded">Clear</button>
       </div>
     </div>
   );

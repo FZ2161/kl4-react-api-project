@@ -29,7 +29,7 @@ export default function BreweryList({ breweries, query, typeFilter, sortOrder, f
   if (showFavorites) {processed = processed.filter((b)=>favorites.includes(b.id))}
 
   if (processed.length == 0) {
-    return <p className="text-center py-8">Nie znaleziono wyników.</p>;
+    return <p className="text-center py-8">No breweries found.</p>;
   }
 
   return (
